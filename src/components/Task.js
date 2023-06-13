@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import { useTasksDispatch } from './TasksContext.js';
+import IconButton from '@mui/material/IconButton';
+import Checkbox from '@mui/material/Checkbox';
+import SaveIcon from '@mui/icons-material/Save';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import TextField from '@mui/material/TextField';
 
 export default function Task({ task }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -8,7 +14,7 @@ export default function Task({ task }) {
   if (isEditing) {
     taskContent = (
       <>
-        <input
+        <TextField
           value={task.text}
           onChange={e => {
             dispatch({
@@ -19,25 +25,25 @@ export default function Task({ task }) {
               }
             });
           }} />
-        <button onClick={() => setIsEditing(false)}>
-          Save
-        </button>
+        <IconButton color="primary" onClick={() => setIsEditing(false)}>
+          <SaveIcon />
+        </IconButton>
+
       </>
     );
   } else {
     taskContent = (
       <>
         {task.text}
-        <button onClick={() => setIsEditing(true)}>
-          Edit
-        </button>
+        <IconButton variant="contained" color="primary" onClick={() => setIsEditing(true)}>
+          <EditIcon />
+        </IconButton>
       </>
     );
   }
   return (
     <label>
-      <input
-        type="checkbox"
+      <Checkbox
         checked={task.done}
         onChange={e => {
           dispatch({
@@ -49,15 +55,19 @@ export default function Task({ task }) {
           });
         }}
       />
+
       {taskContent}
-      <button onClick={() => {
-        dispatch({
-          type: 'deleted',
-          id: task.id
-        });
-      }}>
-        Delete
-      </button>
+
+      <IconButton
+        color="primary"
+        onClick={() => {
+          dispatch({
+            type: 'deleted',
+            id: task.id
+          });
+        }}>
+        <DeleteIcon />
+      </IconButton>
     </label>
   );
 }

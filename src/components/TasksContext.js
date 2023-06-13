@@ -58,12 +58,12 @@ function tasksReducer(tasks, action) {
   }
 }
 
-const localTasks = JSON.parse(localStorage.getItem("myTasks"))
 
-let CurrentTasks = localTasks ||
+let CurrentTasks = JSON.parse(localStorage.getItem("myTasks")) ||
   [
     { id: 0, text: 'Write a song', done: true },
     { id: 1, text: 'Compose it', done: false },
     { id: 2, text: 'Make a video', done: false }
   ];
-if (!localTasks) localStorage.setItem("myTasks", JSON.stringify(CurrentTasks));
+
+!localStorage.length && localStorage.setItem("myTasks", JSON.stringify(CurrentTasks));
