@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { useTasksDispatch } from './TasksContext.js';
-import IconButton from '@mui/material/IconButton';
-import Checkbox from '@mui/material/Checkbox';
+import {
+  Checkbox,
+  IconButton,
+  TextField
+}
+  from '@mui/material';
+
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import TextField from '@mui/material/TextField';
 
 export default function Task({ task }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +38,9 @@ export default function Task({ task }) {
   } else {
     taskContent = (
       <>
-        {task.text}
+        <span className={`task ${task.done ? 'done' : ''}`}>
+          {task.text}
+        </span>
         <IconButton variant="contained" color="primary" onClick={() => setIsEditing(true)}>
           <EditIcon />
         </IconButton>
@@ -42,7 +48,7 @@ export default function Task({ task }) {
     );
   }
   return (
-    <label>
+    <>
       <Checkbox
         checked={task.done}
         onChange={e => {
@@ -68,6 +74,6 @@ export default function Task({ task }) {
         }}>
         <DeleteIcon />
       </IconButton>
-    </label>
+    </>
   );
 }
